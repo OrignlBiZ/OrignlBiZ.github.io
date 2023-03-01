@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<head>
+  <title>Nicholas Davino</title>
+  <style>
+    body {
+      text-align: center;
+      background: url("https://imageio.forbes.com/specials-images/imageserve/625e1fc23b492de685a2adc7/Wall-Street-Brings-Bankers-Back-To-Offices-Remade-For-Hybrid-Era/1960x0.jpg?format=jpg&width=960");
+      background-size: cover;
+      background-position: center;
+      color: orange;
+      font-family:
+    }
+    p {
+      font-size: 22px;
+      border: 10px solid darkred;
+      border-radius: ;
+      width: 500px;
+      margin: 20 auto;
+      background: red
+    }
+    input {
+      border: 10px solid darkred;
+      padding: 10px;
+      font-size: 18px;
+    }
+    input[type="submit"] {
+      background: red;
+      color: orange;
+    }
+    img {
+      width: 300px;
+      border-radius: 50px;
+      border: 10px solid darkred
+      
+      }
+  </style>
+</head>
+<body>
+  <img src="http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcQrS93sc9aO9_WQTP-bYs6WBLQ7JULWdyOkXdvFO90QCepPN_BTLeFKGtVed0rM99GbIeafo4ywxkPAu0Q">
+  <p>Hello! I'm Chris farley if you have any inquiries input your E-mail in the space provided below.</p>
+  <input id="Name" placeholder="Your name">
+  <input id="Email" type="email" placeholder="Your email">
+  <input id="submit" type="submit">
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyC9N_Jn1_DKECYhBg772pS175GiHKvNjSw",
+      authDomain: "orignlbizhtml.firebaseapp.com",
+      databaseURL: "https://orignlbizhtml-default-rtdb.firebaseio.com",
+      projectId: "orignlbizhtml",
+      storageBucket: "orignlbizhtml.appspot.com",
+      messagingSenderId: "154552549810",
+      appId: "1:154552549810:web:ddac43ab3cfe3dde4ee4ab",
+      measurementId: "G-HJXTDZQ7HN"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    
+const Name = document.querySelector("#Name") 
+const Email = document.querySelector("#Email")
+    
+document.querySelector('#submit').addEventListener('click', Submit)
+    
+	function Submit() {
+	  const timestamp = buildTimestamp()
+	  
+	  set(ref(db, timestamp), {
+		  Name: Name.value,
+	      email: Email.value,
+	  });
+
+	  Name.value = ""
+	  Email.value = ""
+	}
+    function buildTimestamp() {
+    	  const now = new Date();
+    	  let timestamp = now.getFullYear().toString() + "/";
+    	  //const month = now.toLocaleString('default', { month: 'long' });
+
+    	  let month = now.getMonth()+1   //add 1 because Javascript uses 0 for January
+    	  month = month.toString()
+    	  month = addLeadingZero(month)
+    	  timestamp += month + "/"; 
+
+    	  let date = now.getDate().toString()
+    	  date = addLeadingZero(date)
+    	  timestamp += date + "/";
+
+    	  let hours = now.getHours().toString()
+    	  hours = addLeadingZero(hours)
+    	  timestamp += hours + ":";
+
+    	  let minutes = now.getMinutes().toString()
+    	  minutes = addLeadingZero(minutes)
+    	  timestamp += minutes + ":";
+
+    	  let seconds = now.getSeconds().toString()
+    	  seconds = addLeadingZero(seconds)
+    	  timestamp += seconds;
+  
+    	  return timestamp
+    	}
+	
+    	function addLeadingZero(units) {
+    		if (units.length < 2) {
+    			units = "0" + units
+    		}
+    		return units
+    	}
+  </script>
+</body>
